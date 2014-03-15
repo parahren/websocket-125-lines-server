@@ -1,4 +1,3 @@
-ws-simple-server
 
 I was looking for information on how to code a websocket server but all that I found 
 was large and complex packages.
