@@ -1,7 +1,7 @@
 ws-simple-server
 
 When I was looking for information on how to code a websocket server all I found was large and compex packages.
-(Why do so many programmers try to solv all problems in the world in all package?!)
+(Why do so many programmers try to solve all problems in the world in all package?!)
 
 To start I just liked to get the concept but there where of websockets but there where 
 very lite information to find.
