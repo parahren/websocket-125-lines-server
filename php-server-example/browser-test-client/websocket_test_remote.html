@@ -170,8 +170,8 @@ _utf8_decode : function (utftext) {
   
   function testWebSocketCmd()
   {
-    baxiProxyAddr = document.getElementById("baxiProxyAddr").value;
-    wsUriCmdTmp = 'ws://' + baxiProxyAddr + ':8080';
+    ProxyAddr = document.getElementById("ProxyAddr").value;
+    wsUriCmdTmp = 'ws://' + ProxyAddr + ':8080';
 
     //alert(wsUriCmdTmp);
 
@@ -301,7 +301,7 @@ _utf8_decode : function (utftext) {
 <h2>WebSocket Test:</h2>
 <hr/>
 <div>
-  IP:<input type="text" id="baxiProxyAddr" size="30" value="192.168.1.111" />
+  IP:<input type="text" id="ProxyAddr" size="30" value="192.168.1.111" />
 
   <button id="OpenSocketCmd" onclick="testWebSocketCmd()">OPEN:SocketCmd</button>
   <button id="CloseSocketCmd" onclick="forceCloseSocketCmd()">CLOSE:SocketCmd</button>
