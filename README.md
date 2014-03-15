@@ -8,5 +8,5 @@ What I was looking for was something that would just show me the concept in an e
 
 So here some code if you like me just like to get the basic concept.
 
-The example is in php because it gives pretty easy and understandeble code.
-I also made some python and java code that I will put here later if requested.
+The example is in php because it gives pretty easy and understandable code.
+(I also made some python and java code that I will put here later if requested)
