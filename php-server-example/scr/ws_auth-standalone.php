@@ -167,7 +167,6 @@ while(1)
 		socket_write($c, "Connection: Upgrade\r\n");
 		socket_write($c, "Sec-WebSocket-Accept: ");
 		socket_write($c, $response);
-		//socket_write($c, "\r\n\r\n");
 		socket_write($c, $HTTP_REQ_END);
 
 		//#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

@@ -61,8 +61,8 @@ while(1)
 		socket_write($c, "Connection: Upgrade\r\n");
 		socket_write($c, "Sec-WebSocket-Accept: ");
 		socket_write($c, $response);
-		socket_write($c, "\r\n\r\n");
-		$respMessAsciiText = "Hi this is the websocket-server in PHP!\r\nby par.ahren@infrasec.se\r\n";
+		socket_write($c, $HTTP_REQ_END);
+		$respMessAsciiText = "Hi this is the websocket-server in PHP talking!\r\n(by par.ahren@infrasec.se)\r\n";
 		$respMessEncoded = base64_encode(utf8_encode($respMessAsciiText));
 		$respMessEncodedLen = strlen($respMessEncoded);
 		if($respMessEncodedLen < 0x7d)
