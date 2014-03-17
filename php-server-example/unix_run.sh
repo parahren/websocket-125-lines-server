@@ -2,7 +2,7 @@
 
 
 
-echo "Websocket server in PHP by par.ahren@infrasec.se"
+echo "starting Websocket server in PHP by par.ahren@infrasec.se"
 
 
 
