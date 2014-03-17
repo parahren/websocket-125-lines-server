@@ -1,6 +1,6 @@
 <?php
 date_default_timezone_set("Europe/Stockholm");
-$HTTP_REQ_KEY      = "Sec-WebSocket-Key: ";
+$HTTP_REQ_KEY = "Sec-WebSocket-Key: ";
 $GUID_STRING  = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
 $HTTP_REQ_END = "\r\n\r\n";
 $sockCount    = 0;
@@ -12,11 +12,11 @@ if (($sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) === false)
 }
 if (socket_bind($sock, $address, $port) === false)
 {
-    die(1);
+    die(2);
 }
 if (socket_listen($sock, 5) === false)
 {
-    die(1);
+    die(3);
 }
 while(1)
 {
@@ -38,18 +38,20 @@ while(1)
 			}
 			else
 			{
-				$loop = false;
+				die(4);
 			}
 		}
 		$HttpReqKey = strpos($httpHeader, $HTTP_REQ_KEY);
 		if ($HttpReqKey === false)
 		{
+			die(5);
 		}
 		$ValueStartPos = ($HttpReqKey + strlen($HTTP_REQ_KEY));
 		$CutBefore     = substr($httpHeader, $ValueStartPos);
 		$ValueEndPos   = strpos($CutBefore, "\r");
 		if ($ValueEndPos === false)
 		{
+			die(6);
 		}
 		$challenge = substr($CutBefore, 0, $ValueEndPos);
 		$response_base = $challenge.$GUID_STRING;
@@ -72,7 +74,7 @@ while(1)
 		}
 		else
 		{
-			die(1);
+			die(7);
 		}
 		socket_write($c, $sndData);
 		$getData = "";
@@ -103,7 +105,7 @@ while(1)
 			}
 			else
 			{
-				die(1);
+				die(8);
 			}
 			$jj = 0;
 			for ($ii = 0; $ii < strlen($msg); $ii++)
@@ -114,6 +116,7 @@ while(1)
 		}
 		else
 		{
+			die(9);
 		}
 		socket_close($c);
 	}
