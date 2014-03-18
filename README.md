@@ -1,6 +1,6 @@
 I was looking for information on how to code a websocket server but all that I found 
 was large and complex packages.
-(Why do so many programmers try to solve all problems in the world in all packages?!)
+(Why do so many programmers try to solve all problems in the world in their own package?!)
 
 What I was looking for was something that would just show me the concept in an easy way.
 
