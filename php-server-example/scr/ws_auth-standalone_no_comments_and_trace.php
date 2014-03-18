@@ -111,6 +111,7 @@ while(1)
 			for ($ii = 0; $ii < strlen($msg); $ii++)
 			{
 				$unMasked = ($msg[$ii] ^ $mask[$jj]);
+                                echo $unMasked;
 				$jj = (++$jj % 4);
 			}
 		}
