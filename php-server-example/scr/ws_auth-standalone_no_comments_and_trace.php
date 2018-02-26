@@ -6,20 +6,16 @@ $HTTP_REQ_END = "\r\n\r\n";
 $sockCount    = 0;
 $address      = '0.0.0.0';
 $port         = 8080;
-if (($sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) === false)
-{
+if (($sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) === false) {
     die(1);
 }
-if (socket_bind($sock, $address, $port) === false)
-{
+if (socket_bind($sock, $address, $port) === false){
     die(2);
 }
-if (socket_listen($sock, 5) === false)
-{
+if (socket_listen($sock, 5) === false){
     die(3);
 }
-while(1)
-{
+while(1){
 	$sockCount++;
 	if(false !== ($c = socket_accept($sock)))
 	{
@@ -42,15 +38,13 @@ while(1)
 			}
 		}
 		$HttpReqKey = strpos($httpHeader, $HTTP_REQ_KEY);
-		if ($HttpReqKey === false)
-		{
+		if ($HttpReqKey === false){
 			die(5);
 		}
 		$ValueStartPos = ($HttpReqKey + strlen($HTTP_REQ_KEY));
 		$CutBefore     = substr($httpHeader, $ValueStartPos);
 		$ValueEndPos   = strpos($CutBefore, "\r");
-		if ($ValueEndPos === false)
-		{
+		if ($ValueEndPos === false){
 			die(6);
 		}
 		$challenge = substr($CutBefore, 0, $ValueEndPos);
@@ -65,58 +59,44 @@ while(1)
 		$respMessAsciiText = "Hi this is the websocket-server in PHP talking!\r\n(by par.ahren@infrasec.se)\r\n";
 		$respMessEncoded = base64_encode(utf8_encode($respMessAsciiText));
 		$respMessEncodedLen = strlen($respMessEncoded);
-		if($respMessEncodedLen < 0x7d)
-		{
+		if($respMessEncodedLen < 0x7d){
 			$sndData = "";
 			$sndData .= chr(0x81);
 			$sndData .= chr($respMessEncodedLen);
 			$sndData .= $respMessEncoded;
-		}
-		else
-		{
+		} else {
 			die(7);
 		}
 		socket_write($c, $sndData);
 		$getData = "";
 		$getData = socket_read($c, 10000);
-		if(empty($getData) !== true)
-		{
+		if(empty($getData) !== true) {
 			$lengthCode = ord($getData[1]) & 127;
-			if($lengthCode < 0x7e)
-			{
+			if($lengthCode < 0x7e) {
 				$binLen = "";
 				$mask = substr($getData, 2, 4);
 				$msg  = substr($getData, 6);
 				$dataLength = $lengthCode;
-			}
-			elseif($lengthCode == 0x7e)
-			{
+			} elseif($lengthCode == 0x7e) {
 				$binLen = substr($getData, 2, 2);
 				$mask   = substr($getData, 4, 4);
 				$msg    = substr($getData, 8);
 				list($dataLength) = array_values(unpack('n', $binLen));
-			}
-			elseif($lengthCode == 0x7f)
-			{
+			} elseif($lengthCode == 0x7f) {
 				$binLen = substr($getData, 2, 4);
 				$mask   = substr($getData, 8, 4);
 				$msg    = substr($getData, 12);
 				list($dataLength) = array_values(unpack('N', $binLen));
-			}
-			else
-			{
+			} else {
 				die(8);
 			}
 			$jj = 0;
-			for ($ii = 0; $ii < strlen($msg); $ii++)
-			{
+			for ($ii = 0; $ii < strlen($msg); $ii++) {
 				$unMasked = ($msg[$ii] ^ $mask[$jj]);
                                 echo $unMasked;
 				$jj = (++$jj % 4);
 			}
-		}
-		else
-		{
+		} else {
 			die(9);
 		}
 		socket_close($c);
