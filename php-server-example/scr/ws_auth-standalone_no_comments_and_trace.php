@@ -3,14 +3,12 @@ date_default_timezone_set("Europe/Stockholm");
 $HTTP_REQ_KEY = "Sec-WebSocket-Key: ";
 $GUID_STRING  = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
 $HTTP_REQ_END = "\r\n\r\n";
-$sockCount    = 0;
 $address      = '0.0.0.0';
 $port         = 8080;
 if (($sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) === false){die(1);}
 if (socket_bind($sock, $address, $port) === false){die(2);}
 if (socket_listen($sock, 5) === false){die(3);}
 while(1){
-	$sockCount++;
 	if(false !== ($c = socket_accept($sock))){
 		$loop = true;
 		$httpHeader = "";
