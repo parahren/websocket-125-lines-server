@@ -30,14 +30,8 @@ while(1){
 		$challenge = substr($CutBefore, 0, $ValueEndPos);
 		$response_base = $challenge.$GUID_STRING;
 		$response = base64_encode(sha1($response_base, true));
-		socket_write($c, "HTTP/1.1 101 Switching Protocols\r\n");
-		socket_write($c, "Upgrade: websocket\r\n");
-		socket_write($c, "Connection: Upgrade\r\n");
-		socket_write($c, "Sec-WebSocket-Accept: ");
-		socket_write($c, $response);
-		socket_write($c, $HTTP_REQ_END);
-		$respMessAsciiText = "Hi this is the websocket-server in PHP talking!\r\n(by par.ahren@infrasec.se)\r\n";
-		$respMessEncoded = base64_encode(utf8_encode($respMessAsciiText));
+		socket_write($c, "HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: ".$response.$HTTP_REQ_END);
+		$respMessEncoded = base64_encode(utf8_encode("Hi this is the websocket-server in PHP talking!\r\n(by par.ahren@infrasec.se)\r\n"));
 		$respMessEncodedLen = strlen($respMessEncoded);
 		if($respMessEncodedLen < 0x7d){
 			$sndData = "";
