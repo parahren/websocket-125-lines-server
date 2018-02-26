@@ -6,47 +6,27 @@ $HTTP_REQ_END = "\r\n\r\n";
 $sockCount    = 0;
 $address      = '0.0.0.0';
 $port         = 8080;
-if (($sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) === false) {
-    die(1);
-}
-if (socket_bind($sock, $address, $port) === false){
-    die(2);
-}
-if (socket_listen($sock, 5) === false){
-    die(3);
-}
+if (($sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP)) === false){die(1);}
+if (socket_bind($sock, $address, $port) === false){die(2);}
+if (socket_listen($sock, 5) === false){die(3);}
 while(1){
 	$sockCount++;
-	if(false !== ($c = socket_accept($sock)))
-	{
+	if(false !== ($c = socket_accept($sock))){
 		$loop = true;
 		$httpHeader = "";
-		while ($loop == true)
-		{
+		while ($loop == true){
 			$char = socket_read($c, 1);
-			if($char !== false)
-			{
+			if($char !== false){
 				$httpHeader .= $char;
-				if(strcmp($HTTP_REQ_END, substr($httpHeader, -4)) == 0)
-				{
-					$loop = false;
-				}
-			}
-			else
-			{
-				die(4);
-			}
+				if(strcmp($HTTP_REQ_END, substr($httpHeader, -4)) == 0){$loop = false;}
+			} else {die(4);}
 		}
 		$HttpReqKey = strpos($httpHeader, $HTTP_REQ_KEY);
-		if ($HttpReqKey === false){
-			die(5);
-		}
+		if ($HttpReqKey === false){die(5);}
 		$ValueStartPos = ($HttpReqKey + strlen($HTTP_REQ_KEY));
 		$CutBefore     = substr($httpHeader, $ValueStartPos);
 		$ValueEndPos   = strpos($CutBefore, "\r");
-		if ($ValueEndPos === false){
-			die(6);
-		}
+		if ($ValueEndPos === false){die(6);}
 		$challenge = substr($CutBefore, 0, $ValueEndPos);
 		$response_base = $challenge.$GUID_STRING;
 		$response = base64_encode(sha1($response_base, true));
@@ -64,9 +44,7 @@ while(1){
 			$sndData .= chr(0x81);
 			$sndData .= chr($respMessEncodedLen);
 			$sndData .= $respMessEncoded;
-		} else {
-			die(7);
-		}
+		} else {die(7);}
 		socket_write($c, $sndData);
 		$getData = "";
 		$getData = socket_read($c, 10000);
@@ -96,9 +74,7 @@ while(1){
                                 echo $unMasked;
 				$jj = (++$jj % 4);
 			}
-		} else {
-			die(9);
-		}
+		} else {die(9);}
 		socket_close($c);
 	}
 }
