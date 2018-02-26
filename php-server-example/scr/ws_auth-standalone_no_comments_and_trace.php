@@ -69,4 +69,3 @@ while(1){
 		socket_close($c);
 	}
 }
-socket_close($socket);
