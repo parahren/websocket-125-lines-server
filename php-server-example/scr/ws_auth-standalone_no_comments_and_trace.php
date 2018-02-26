@@ -65,9 +65,7 @@ while(1){
 				$mask   = substr($getData, 8, 4);
 				$msg    = substr($getData, 12);
 				list($dataLength) = array_values(unpack('N', $binLen));
-			} else {
-				die(8);
-			}
+			} else {die(8);}
 			$jj = 0;
 			for ($ii = 0; $ii < strlen($msg); $ii++) {
 				$unMasked = ($msg[$ii] ^ $mask[$jj]);
