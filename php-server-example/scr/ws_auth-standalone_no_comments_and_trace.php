@@ -46,7 +46,6 @@ while(1){
 			$sndData .= $respMessEncoded;
 		} else {die(7);}
 		socket_write($c, $sndData);
-		$getData = "";
 		$getData = socket_read($c, 10000);
 		if(empty($getData) !== true) {
 			$lengthCode = ord($getData[1]) & 127;
