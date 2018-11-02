@@ -10,5 +10,5 @@ The example is in php because it gives pretty easy and understandable code.
 (I also made some python and java code that I will put here later if requested)
 
 The stripped file "ws_auth-standalone_no_comments_and_trace.php" does this in only 
-12n-lines of code.
+125-lines of code.
 
